@@ -1,48 +1,51 @@
 from django.db import models
 
-class Hra(models.Model):
-    id_Hra = models.AutoField(primary_key=True)
-    nazev = models.CharField(max_length=45)
-    rok_vydani = models.IntegerField()
-    cena = models.IntegerField()
-    popis = models.CharField(max_length=150)
+class Game(models.Model):
+    title = models.CharField(max_length=45)
+    release_year = models.IntegerField()
+    price = models.IntegerField()
+    description = models.CharField(max_length=150)
 
     def __str__(self):
-        return self.nazev
+        return self.title
 
-class Hrac(models.Model):
-    id_Hrac = models.AutoField(primary_key=True)
+class Player(models.Model):
     nickname = models.CharField(max_length=45)
     email = models.CharField(max_length=45)
 
     def __str__(self):
         return self.nickname
 
-class Hra_has_platforma(models.Model):
-    Hra_id_Hra = models.IntegerField()
-    Platforma_id_Platforma = models.IntegerField()
+class Platform(models.Model):
+    platform_name = models.CharField(max_length=45)
 
     def __str__(self):
-        return f"Hra ID: {self.Hra_id_Hra}, Platforma ID: {self.Platforma_id_Platforma}"
+        return self.platform_name
 
-class Hra_has_zanr(models.Model):
-    Hra_id_Hra = models.IntegerField()
-    Zanr_id_Zanr = models.IntegerField()
-
-    def __str__(self):
-        return f"Hra ID: {self.Hra_id_Hra}, Žánr ID: {self.Zanr_id_Zanr}"
-
-class Knihovna_hrace(models.Model):
-    Hra_id_Hra = models.IntegerField()
-    Hrac_id_Hrac = models.IntegerField()
-    datum_ziskani = models.DateField()
+class Genre(models.Model):
+    genre_name = models.CharField(max_length=45)
 
     def __str__(self):
-        return f"Hra ID: {self.Hra_id_Hra}, Hráč ID: {self.Hrac_id_Hrac}"
+        return self.genre_name
 
-class Platforma(models.Model):
-    id_Platforma = models.AutoField(primary_key=True)
-    nazev_platformy = models.CharField(max_length=45)
+class GamePlatform(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    platform = models.ForeignKey(Platform, on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.nazev_platformy
+        return f"{self.game} on {self.platform}"
+
+class GameGenre(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.game} - {self.genre}"
+
+class PlayerLibrary(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    player = models.ForeignKey(Player, on_delete=models.CASCADE)
+    acquisition_date = models.DateField()
+
+    def __str__(self):
+        return f"{self.player} owns {self.game} since {self.acquisition_date}"
