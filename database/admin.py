@@ -1,9 +1,10 @@
 from django.contrib import admin
-from .models import Hra, Hrac, Hra_has_platforma, Hra_has_zanr, Knihovna_hrace, Platforma
+from .models import Game, Player, Platform, Genre, GamePlatform, GameGenre, PlayerLibrary
 
-admin.site.register(Hra)
-admin.site.register(Hrac)
-admin.site.register(Hra_has_platforma)
-admin.site.register(Hra_has_zanr)
-admin.site.register(Knihovna_hrace)
-admin.site.register(Platforma)
+admin.site.register(Game)
+admin.site.register(Player)
+admin.site.register(Platform)
+admin.site.register(Genre)
+admin.site.register(GamePlatform)
+admin.site.register(GameGenre)
+admin.site.register(PlayerLibrary)
