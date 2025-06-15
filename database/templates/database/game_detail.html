@@ -1,17 +1,56 @@
 {% extends "database/base.html" %}
+{% load static %}
 
 {% block content %}
 <div class="container mt-5">
   <h2>{{ game.title }}</h2>
 
+  {% if game.photo %}
+    <img src="{{ game.photo.url }}" alt="{{ game.title }}" class="img-fluid mb-4" style="max-height: 400px;">
+  {% else %}
+    <img src="{% static 'game_photos/default.jpg' %}" alt="No image" class="img-fluid mb-4" style="max-height: 400px;">
+  {% endif %}
+
   <ul class="list-group my-4">
     <li class="list-group-item"><strong>Release Year:</strong> {{ game.release_year }}</li>
-    <li class="list-group-item"><strong>Price:</strong> {{ game.price }} Kč</li>
-    {% if game.description %}
-      <li class="list-group-item"><strong>Description:</strong> {{ game.description }}</li>
-    {% else %}
-      <li class="list-group-item"><em>No description provided.</em></li>
-    {% endif %}
+    <li class="list-group-item"><strong>Price:</strong> {{ game.price }} $</li>
+
+    <li class="list-group-item">
+      <strong>Platforms:</strong>
+      {% for platform in game.platforms.all %}
+        {{ platform.platform_name }}{% if not forloop.last %}, {% endif %}
+      {% empty %}
+        <em>No platforms listed.</em>
+      {% endfor %}
+    </li>
+
+    <li class="list-group-item">
+      <strong>Genres:</strong>
+      {% for genre in game.genres.all %}
+        {{ genre.genre_name }}{% if not forloop.last %}, {% endif %}
+      {% empty %}
+        <em>No genres listed.</em>
+      {% endfor %}
+    </li>
+
+
+    <li class="list-group-item">
+      <strong>Description:</strong>
+      {% if game.description %}
+        {{ game.description }}
+      {% else %}
+        <em>No description provided.</em>
+      {% endif %}
+    </li>
+    
+    <li class="list-group-item">
+      <strong>Owner:</strong>
+      {% if game.owner %}
+        {{ game.owner.username }}
+      {% else %}
+        <em>No owner assigned.</em>
+      {% endif %}
+    </li>
   </ul>
 
   <a href="{% url 'game_list' %}" class="btn btn-secondary">← Back to game list</a>
