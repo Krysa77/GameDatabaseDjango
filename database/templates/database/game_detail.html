@@ -1,0 +1,5 @@
+<h1>{{ game.title }}</h1>
+<p><strong>Rok vydání:</strong> {{ game.release_year }}</p>
+<p><strong>Cena:</strong> {{ game.price }} Kč</p>
+<p><strong>Popis:</strong> {{ game.description }}</p>
+<a href="{% url 'game_list' %}">Zpět na seznam</a>
