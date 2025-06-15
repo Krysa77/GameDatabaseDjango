@@ -1,5 +1,19 @@
-<h1>{{ game.title }}</h1>
-<p><strong>Rok vydání:</strong> {{ game.release_year }}</p>
-<p><strong>Cena:</strong> {{ game.price }} Kč</p>
-<p><strong>Popis:</strong> {{ game.description }}</p>
-<a href="{% url 'game_list' %}">Zpět na seznam</a>
+{% extends "database/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2>{{ game.title }}</h2>
+
+  <ul class="list-group my-4">
+    <li class="list-group-item"><strong>Release Year:</strong> {{ game.release_year }}</li>
+    <li class="list-group-item"><strong>Price:</strong> {{ game.price }} Kč</li>
+    {% if game.description %}
+      <li class="list-group-item"><strong>Description:</strong> {{ game.description }}</li>
+    {% else %}
+      <li class="list-group-item"><em>No description provided.</em></li>
+    {% endif %}
+  </ul>
+
+  <a href="{% url 'game_list' %}" class="btn btn-secondary">← Back to game list</a>
+</div>
+{% endblock %}

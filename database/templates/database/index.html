@@ -1,2 +1,32 @@
-<h1>Vítejte v GameDatabase</h1>
-<p><a href="{% url 'game_list' %}">Zobrazit seznam her</a></p>
+{% extends "database/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="text-center">Welcome to the Game Database</h2>
+  <p class="text-center">Browse your favorite games, genres, and platforms. Add your own titles and manage your collection.</p>
+
+  <div class="row text-center mt-4">
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Games</h5>
+          <p class="card-text">{{ game_count }} total games</p>
+          <a href="{% url 'game_list' %}" class="btn btn-primary">View all games</a>
+        </div>
+      </div>
+    </div>
+
+
+  <h3 class="mt-5">Recently Added Games</h3>
+  <ul class="list-group">
+    {% for game in recent_games %}
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        {{ game.title }} ({{ game.release_year }})
+        <a href="{% url 'game_detail' game.id %}" class="btn btn-sm btn-outline-secondary">Details</a>
+      </li>
+    {% empty %}
+      <li class="list-group-item">No games added yet.</li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

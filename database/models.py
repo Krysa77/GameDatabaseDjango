@@ -20,6 +20,21 @@ class Game(models.Model):
         verbose_name = "Game"
         verbose_name_plural = "Games"
         ordering = ['title']
+    
+    photo = models.ImageField(
+        upload_to='game_photos/',
+        blank=True,
+        null=True,
+        verbose_name="Game Photo"
+    )
+    owner = models.ForeignKey(
+        'Player',
+        on_delete=models.CASCADE,
+        related_name='games',
+        verbose_name="Owner",
+        blank=True,
+        null=True,
+    )
 
 
 class Platform(models.Model):
@@ -42,3 +57,15 @@ class Genre(models.Model):
     class Meta:
         verbose_name = "Genre"
         verbose_name_plural = "Genres"
+
+class Player(models.Model):
+    username = models.CharField(max_length=50, unique=True, verbose_name="Username")
+    email = models.EmailField(unique=True, verbose_name="Email")
+    password = models.CharField(max_length=100, verbose_name="Password")
+
+    def __str__(self):
+        return self.username
+
+    class Meta:
+        verbose_name = "Player"
+        verbose_name_plural = "Players"
