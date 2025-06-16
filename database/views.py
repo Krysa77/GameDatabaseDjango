@@ -1,3 +1,5 @@
+from django.views.generic.edit import UpdateView
+from django.urls import reverse_lazy
 from django.shortcuts import render, get_object_or_404
 from .models import Game, Platform, Genre, Player
 
@@ -17,3 +19,11 @@ def game_list(request):
 def game_detail(request, game_id):
     game = get_object_or_404(Game, id=game_id)
     return render(request, "database/game_detail.html", {"game": game})
+
+class GameUpdateView(UpdateView):
+    model = Game
+    fields = ['title', 'description', 'release_year', 'photo', 'price', 'platforms', 'genres']
+    template_name = 'database/game_edit.html'
+
+    def get_success_url(self):
+        return reverse_lazy('game_detail', kwargs={'game_id': self.object.pk})

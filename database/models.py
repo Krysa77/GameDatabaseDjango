@@ -13,14 +13,6 @@ class Game(models.Model):
     genres = models.ManyToManyField('Genre', verbose_name="Genres")
     description = models.TextField(blank=True, verbose_name="Description")
 
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        verbose_name = "Game"
-        verbose_name_plural = "Games"
-        ordering = ['title']
-    
     photo = models.ImageField(
         upload_to='game_photos/',
         blank=True,
@@ -35,6 +27,15 @@ class Game(models.Model):
         blank=True,
         null=True,
     )
+
+    class Meta:
+        verbose_name = "Game"
+        verbose_name_plural = "Games"
+        ordering = ['title']
+    
+    def __str__(self):
+        return self.title
+
 
 
 class Platform(models.Model):

@@ -9,11 +9,13 @@
     {% for game in games %}
       <div class="col-md-4 mb-4">
         <div class="card h-100 shadow-sm">
-          {% if game.photo %}
-            <img src="{{ game.photo.url }}" class="card-img-top" alt="{{ game.title }}" width="300" height="200">
-          {% else %}
-            <img src="{% static 'game_photos/default.jpg' %}" class="card-img-top" alt="No image">
-          {% endif %}
+          <a href="{% url 'game_detail' game.id %}">
+            {% if game.photo %}
+              <img src="{{ game.photo.url }}" class="card-img-top" alt="{{ game.title }}" width="300" height="200">
+            {% else %}
+              <img src="{% static 'game_photos/default.jpg' %}" class="card-img-top" alt="No image">
+            {% endif %}
+          </a>
           <div class="card-body">
             <h5 class="card-title">{{ game.title }}</h5>
             <p class="card-text">Released: {{ game.release_year }}</p>

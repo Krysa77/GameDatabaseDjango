@@ -12,9 +12,9 @@
   {% endif %}
 
   <ul class="list-group my-4">
-    <li class="list-group-item"><strong>Release Year:</strong> {{ game.release_year }}</li>
     <li class="list-group-item"><strong>Price:</strong> {{ game.price }} $</li>
-
+    <li class="list-group-item"><strong>Release Year:</strong> {{ game.release_year }}</li>
+    
     <li class="list-group-item">
       <strong>Platforms:</strong>
       {% for platform in game.platforms.all %}
@@ -52,7 +52,8 @@
       {% endif %}
     </li>
   </ul>
-
-  <a href="{% url 'game_list' %}" class="btn btn-secondary">← Back to game list</a>
-</div>
+  <div class="d-flex justify-content-between">
+    <a href="{% url 'game_edit' game.id %}" class="btn btn-primary">Edit Game</a>
+    <a href="{% url 'game_list' %}" class="btn btn-secondary">Back to Game List</a>
+  </div>
 {% endblock %}
